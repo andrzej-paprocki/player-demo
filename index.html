@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MP4 player</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="player" id="player">
+  <div class="container" id="container">
+    <div class="wrapper" id="wrapper">
+
+      <!-- Видео -->
+      <video id="video-player" src="0.mp4" type="video/mp4"></video>
+
+      <!-- Прогресс -->
+      <div class="slider_container">
+        <div id="out" class="current-time">00:00</div>
+        <div class="progress-container" id="progress-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div id="duration" class="total-duration">00:00</div>
+      </div>
+
+      <!-- Кнопки -->
+      <div class="container-buttons" id="con_buttons">
+        <button id="prev" class="prev-track"><<</button>
+        <button id="next" class="next-track">>></button>
+        <button id="play" class="playpause-track">Play</button>
+        <button id="loop" class="loop">Loop</button>
+        <button id="speed-down" class="speed-down">- Speed</button>
+        <button id="speed-up" class="speed-up">+ Speed</button>
+        <button id="speed-normal" class="speed-normal">Speed = 1</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
