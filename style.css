@@ -18,8 +18,6 @@ body {
     border-radius:10px;
     background-color: WhiteSmoke;
     border: 1px solid lightgray;
-
-    /* FIX: предотвращает изменение размера */
     outline: none;
     transform: none;
     -webkit-tap-highlight-color: transparent;
@@ -45,8 +43,6 @@ body {
   box-shadow:
     rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
-
-  /* FIX: стабилизирует layout */
   transform: translateZ(0);
 }
 
@@ -70,7 +66,6 @@ video {
   opacity: 0.5;
 }
 
-/* Кастомный прогресс-бар */
 .progress-container {
   flex: 1;
   height: 5px;
@@ -88,7 +83,6 @@ video {
   transition: width 0.2s linear;
 }
 
-/* Контейнер кнопок */
 .container-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -98,7 +92,6 @@ video {
   margin-top: 15px;
 }
 
-/* Кнопки */
 .container-buttons button {
   padding: 20px;
   opacity: 0.5;
@@ -109,26 +102,23 @@ video {
   background-color: WhiteSmoke;
   border: 1px solid lightgray;
 
-  /* CRITICAL FIX */
   outline: none;
   transform: none;
   -webkit-tap-highlight-color: transparent;
   appearance: none;
 }
 
-/* hover только для desktop */
+/* hover for desktop */
 .container-buttons button:hover {
   opacity: 1.0;
 }
 
-/* FIX: убирает изменение размера при нажатии */
 .container-buttons button:active {
   opacity: 1.0;
   transform: none !important;
   outline: none !important;
 }
 
-/* FIX: убирает focus после нажатия */
 .container-buttons button:focus {
   outline: none !important;
   opacity: 0.5;
@@ -141,8 +131,6 @@ video {
   .container-buttons button {
     width: 45%;
     max-width: 220px;
-
-    /* предотвращает mobile rendering shift */
     transform: none !important;
   }
 
@@ -162,35 +150,26 @@ video {
   }
 
   .container-buttons button {
-
     width: 80%;
     max-width: 280px;
-
     outline: none !important;
     transform: none !important;
     -webkit-tap-highlight-color: transparent;
-
   }
 
-  /* полностью отключаем hover на touch */
   .container-buttons button:hover {
     opacity: 0.5;
   }
 
   .container-buttons button:active {
-
     opacity: 1.0;
     transform: none !important;
     outline: none !important;
-
   }
 
   .container-buttons button:focus {
-
     opacity: 0.5;
     outline: none !important;
     transform: none !important;
-
   }
-
 }
