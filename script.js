@@ -5,7 +5,7 @@ const nextBtn = document.querySelector('#next');
 const loopBtn = document.querySelector('#loop');
 const speedupBtn = document.querySelector('#speed-up');
 const speeddownBtn = document.querySelector('#speed-down');
-const speedNormalBtn = document.querySelector('#speed-normal'); // новая кнопка
+const speedNormalBtn = document.querySelector('#speed-normal'); 
 const currentTimeEl = document.querySelector('#out');
 const durationEl = document.querySelector('#duration');
 const progressBar = document.querySelector('#progress-bar');
@@ -13,11 +13,10 @@ const progressContainer = document.querySelector('#progress-container');
 
 let speed = 1;
 let tracknumber = 0;
-const totalTracks = 5; // укажите количество треков
 let flag = 0; // Loop
 let displayedWidth = 0;
 
-/* ПОКАЗАТЬ / СКРЫТЬ ПРОГРЕСС */
+/* SHOW / HIDE THE PROGRESSBAR */
 function showProgressBar() {
     progressContainer.style.opacity = '1';
 }
@@ -25,7 +24,7 @@ function hideProgressBar() {
     progressContainer.style.opacity = '0';
 }
 
-/* МГНОВЕННЫЙ СБРОС ПРОГРЕСС-БАРА */
+/* PROGRESSBAR RESET */
 function resetProgressBarInstantly() {
     progressBar.style.transition = 'none';
     displayedWidth = 0;
@@ -35,7 +34,7 @@ function resetProgressBarInstantly() {
     });
 }
 
-/* ЗАГРУЗКА ТРЕКА */
+/* TRACK LOAD */
 function loadTrack(index) {
     if (index >= totalTracks || index < 0) {
         video.pause();
@@ -51,13 +50,13 @@ function loadTrack(index) {
     showProgressBar();
 }
 
-/* СЛЕДУЮЩИЙ ТРЕК */
+/* NEXT TRACK */
 function playNextTrack() {
     tracknumber++;
     loadTrack(tracknumber);
 }
 
-/* ПЛАВНОЕ ОБНОВЛЕНИЕ ПРОГРЕСС-БАРА */
+/* NEW PROGRESSBAR */
 function updateProgressSmooth() {
     if (!isNaN(video.duration) && video.currentTime > 0) {
         const targetPercent = (video.currentTime / video.duration) * 100;
@@ -136,7 +135,7 @@ loopBtn.onclick = () => {
     }
 };
 
-/* АВТОМАТИЧЕСКОЕ ОКОНЧАНИЕ ТРЕКА */
+/* END OF TRACK */
 video.addEventListener('ended', () => {
     if (flag === 1) {
         video.currentTime = 0;
@@ -147,7 +146,7 @@ video.addEventListener('ended', () => {
     }
 });
 
-/* ОБНОВЛЕНИЕ ВРЕМЕНИ */
+/* NEW TIME */
 video.addEventListener('timeupdate', () => {
     if (!isNaN(video.duration)) {
         const currentMinutes = Math.floor(video.currentTime / 60);
@@ -165,7 +164,7 @@ video.addEventListener('timeupdate', () => {
     }
 });
 
-/* SEEK ПО КЛИКУ */
+/* SEEK ON CLICK*/
 progressContainer.addEventListener('click', (e) => {
     const width = progressContainer.clientWidth;
     const clickX = e.offsetX;
