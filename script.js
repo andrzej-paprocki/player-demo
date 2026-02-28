@@ -5,7 +5,7 @@ const nextBtn = document.querySelector('#next');
 const loopBtn = document.querySelector('#loop');
 const speedupBtn = document.querySelector('#speed-up');
 const speeddownBtn = document.querySelector('#speed-down');
-const speedNormalBtn = document.querySelector('#speed-normal'); 
+const speedNormalBtn = document.querySelector('#speed-normal');
 const currentTimeEl = document.querySelector('#out');
 const durationEl = document.querySelector('#duration');
 const progressBar = document.querySelector('#progress-bar');
@@ -16,7 +16,7 @@ let tracknumber = 0;
 let flag = 0; // Loop
 let displayedWidth = 0;
 
-/* SHOW / HIDE THE PROGRESSBAR */
+/* ПОКАЗАТЬ / СКРЫТЬ ПРОГРЕСС */
 function showProgressBar() {
     progressContainer.style.opacity = '1';
 }
@@ -24,7 +24,7 @@ function hideProgressBar() {
     progressContainer.style.opacity = '0';
 }
 
-/* PROGRESSBAR RESET */
+/* МГНОВЕННЫЙ СБРОС ПРОГРЕСС-БАРА */
 function resetProgressBarInstantly() {
     progressBar.style.transition = 'none';
     displayedWidth = 0;
@@ -34,29 +34,55 @@ function resetProgressBarInstantly() {
     });
 }
 
-/* TRACK LOAD */
+/* ОБНОВЛЕНИЕ СОСТОЯНИЯ КНОПОК */
+function updateButtonsState() {
+    prevBtn.disabled = tracknumber === 0; 
+}
+
+/* ЗАГРУЗКА ТРЕКА */
 function loadTrack(index) {
-    if (index >= totalTracks || index < 0) {
-        video.pause();
-        playBtn.innerText = "Play";
-        hideProgressBar();
-        return;
-    }
+    // if (index < 0) {
+    //     alert("This is the first track.");
+    //     return;
+    // }
+
     resetProgressBarInstantly();
     video.src = index + ".mp4";
     video.playbackRate = speed;
-    video.play();
-    playBtn.innerText = "Pause";
-    showProgressBar();
+
+    tracknumber = index;
+    updateButtonsState(); 
+
+
+    video.onerror = () => {
+        video.pause();
+        playBtn.innerText = "Play";
+        hideProgressBar();
+        alert("The end.");
+        video.onerror = null; 
+    };
+
+    video.oncanplay = () => {
+        video.play();
+        playBtn.innerText = "Pause";
+        showProgressBar();
+        video.oncanplay = null; 
+    };
 }
 
-/* NEXT TRACK */
+/* СЛЕДУЮЩИЙ ТРЕК */
 function playNextTrack() {
     tracknumber++;
     loadTrack(tracknumber);
 }
 
-/* NEW PROGRESSBAR */
+/* ПРЕДЫДУЩИЙ ТРЕК */
+function playPrevTrack() {
+    tracknumber--;
+    loadTrack(tracknumber);
+}
+
+/* ПЛАВНОЕ ОБНОВЛЕНИЕ ПРОГРЕСС-БАРА */
 function updateProgressSmooth() {
     if (!isNaN(video.duration) && video.currentTime > 0) {
         const targetPercent = (video.currentTime / video.duration) * 100;
@@ -114,15 +140,10 @@ speedNormalBtn.onclick = () => {
 };
 
 /* NEXT */
-nextBtn.onclick = () => playNextTrack();
+nextBtn.onclick = playNextTrack;
 
 /* PREV */
-prevBtn.onclick = () => {
-    if (tracknumber > 0) {
-        tracknumber--;
-        loadTrack(tracknumber);
-    }
-};
+prevBtn.onclick = playPrevTrack;
 
 /* LOOP */
 loopBtn.onclick = () => {
@@ -135,7 +156,7 @@ loopBtn.onclick = () => {
     }
 };
 
-/* END OF TRACK */
+/* АВТОМАТИЧЕСКОЕ ОКОНЧАНИЕ ТРЕКА */
 video.addEventListener('ended', () => {
     if (flag === 1) {
         video.currentTime = 0;
@@ -146,7 +167,7 @@ video.addEventListener('ended', () => {
     }
 });
 
-/* NEW TIME */
+/* ОБНОВЛЕНИЕ ВРЕМЕНИ */
 video.addEventListener('timeupdate', () => {
     if (!isNaN(video.duration)) {
         const currentMinutes = Math.floor(video.currentTime / 60);
@@ -164,7 +185,7 @@ video.addEventListener('timeupdate', () => {
     }
 });
 
-/* SEEK ON CLICK*/
+/* SEEK ПО КЛИКУ */
 progressContainer.addEventListener('click', (e) => {
     const width = progressContainer.clientWidth;
     const clickX = e.offsetX;
@@ -178,3 +199,6 @@ document.addEventListener("keydown", (e) => {
         playBtn.click();
     }
 });
+
+
+updateButtonsState();
