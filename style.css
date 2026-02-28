@@ -34,7 +34,6 @@ body {
 
 /* Главный контейнер плеера */
 .player {
-  /* устраняет дергание и центрирует */
   min-height: 100vh;
   min-height: 100svh;
   min-height: 100dvh;
@@ -48,8 +47,11 @@ body {
 .wrapper {
   width: 100%;
   max-width: 1100px;
-  padding: 30px;
 
+  /* FIX: предотвращает дергание при нажатии кнопок */
+  min-height: 400px; /* подберите под высоту видео */
+  
+  padding: 30px;
   border-radius: 20px;
   background-color: #ddd;
 
@@ -57,8 +59,15 @@ body {
     rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
 
-  /* предотвращает layout shift */
+  /* GPU слой для плавной отрисовки */
   transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: transform;
+
+  /* Сохраняем flex-центрирование */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Видео */
@@ -177,7 +186,6 @@ video {
 /* Mobile */
 @media (max-width: 480px) {
   .wrapper {
-    width: 100%;
     padding: 15px;
   }
 
