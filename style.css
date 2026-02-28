@@ -35,7 +35,7 @@ body {
 }
 
 .player {
-  min-height: 100svh; /* FIX: стабильная высота */
+  min-height: 100dvh; /* FIX: стабильная высота */
   display: flex;
   justify-content: center;
   align-items: center;
