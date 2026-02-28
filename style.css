@@ -177,6 +177,7 @@ video {
 /* Mobile */
 @media (max-width: 480px) {
   .wrapper {
+    width: 100%;
     padding: 15px;
   }
 
