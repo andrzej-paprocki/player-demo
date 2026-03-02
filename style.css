@@ -167,15 +167,14 @@ body {
 }
 
 @media (max-width: 400px) {
-  /* Кнопки в два столбца */
   .container-buttons {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 6px;
   }
 
   /* Wrapper чуть меньше для очень маленьких экранов */
   .wrapper {
-    min-height: 800px;
+    min-height: 1000px;
   }
 
   /* Видео сохраняет aspect-ratio 16/9 */
