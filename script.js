@@ -122,13 +122,13 @@ playBtn.onclick = () => {
 /* REAL VIDEO EVENTS CONTROL BUTTON STATE */
 
 video.addEventListener('play', () => {
-    playBtn.innerText = "| |";
+    playBtn.innerText = "Pause";
     showProgressBar();
 });
 
 
 video.addEventListener('pause', () => {
-    playBtn.innerText = "▶";
+    playBtn.innerText = "Play";
 });
 
 
@@ -145,7 +145,7 @@ video.addEventListener('error', () => {
     trackExists = false;
     video.pause();
     hideProgressBar();
-    playBtn.innerText = "▶";
+    playBtn.innerText = "";
     alert("No more tracks");
 });
 
