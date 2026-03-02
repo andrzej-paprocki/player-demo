@@ -13,194 +13,368 @@ const progressContainer = document.querySelector('#progress-container');
 
 let speed = 1;
 let tracknumber = 0;
-let flag = 0; // Loop flag
+let loopEnabled = false;
 let displayedWidth = 0;
+let trackExists = true;
+
+video.playsInline = true;
+video.preload = "metadata";
+
 
 /* SHOW / HIDE PROGRESS BAR */
+
 function showProgressBar() {
     progressContainer.style.opacity = '1';
 }
+
 function hideProgressBar() {
     progressContainer.style.opacity = '0';
 }
 
-/* INSTANTLY RESET PROGRESS BAR */
+
+/* RESET PROGRESS BAR */
+
 function resetProgressBarInstantly() {
+
     progressBar.style.transition = 'none';
+
     displayedWidth = 0;
+
     progressBar.style.width = '0%';
+
     requestAnimationFrame(() => {
         progressBar.style.transition = 'width 0.2s linear';
     });
+
 }
 
-/* UPDATE BUTTON STATES */
+
+/* UPDATE PREV BUTTON STATE */
+
 function updateButtonsState() {
-    prevBtn.disabled = tracknumber === 0; // disable prev if first track
+
+    prevBtn.disabled = tracknumber === 0;
+
 }
+
 
 /* LOAD TRACK */
+
 function loadTrack(index) {
+
     if (index < 0) {
         alert("This is the first track");
         return;
     }
 
+    trackExists = true;
+
     resetProgressBarInstantly();
+
+    video.pause();
+
     video.src = index + ".mp4";
+
+    video.load();
+
     video.playbackRate = speed;
 
     tracknumber = index;
-    updateButtonsState(); // update button states
 
-    // If file does not exist, show alert
-    video.onerror = () => {
-        video.pause();
-        playBtn.innerText = "▶";
-        hideProgressBar();
-        alert("No more tracks");
-        video.onerror = null; // remove error handler
-    };
+    updateButtonsState();
 
-    video.oncanplay = () => {
-        video.play();
-        playBtn.innerText = "| |";
-        showProgressBar();
-        video.oncanplay = null; // remove canplay handler
-    };
 }
+
 
 /* NEXT TRACK */
+
 function playNextTrack() {
-    tracknumber++;
-    loadTrack(tracknumber);
+
+    if (!trackExists) return;
+
+    loadTrack(tracknumber + 1);
+
 }
+
 
 /* PREVIOUS TRACK */
+
 function playPrevTrack() {
-    tracknumber--;
-    loadTrack(tracknumber);
+
+    loadTrack(tracknumber - 1);
+
 }
 
-/* SMOOTH PROGRESS BAR UPDATE */
+
+/* PROGRESS BAR SMOOTH UPDATE */
+
 function updateProgressSmooth() {
-    if (!isNaN(video.duration) && video.currentTime > 0) {
-        const targetPercent = (video.currentTime / video.duration) * 100;
-        displayedWidth += (targetPercent - displayedWidth) * 0.1;
-        progressBar.style.width = displayedWidth + '%';
+
+    if (!isNaN(video.duration) && video.duration > 0) {
+
+        const targetPercent =
+            (video.currentTime / video.duration) * 100;
+
+        displayedWidth +=
+            (targetPercent - displayedWidth) * 0.15;
+
+        progressBar.style.width =
+            displayedWidth + '%';
+
     }
+
     requestAnimationFrame(updateProgressSmooth);
+
 }
+
 updateProgressSmooth();
 
-/* PLAY / PAUSE */
+
+/* PLAY / PAUSE BUTTON (FIXED FOR MOBILE) */
+
 playBtn.onclick = () => {
+
+    if (!trackExists) return;
+
     video.playbackRate = speed;
-    if (playBtn.innerText === "▶") {
+
+    if (video.paused)
         video.play();
-        playBtn.innerText = "| |";
-        showProgressBar();
-    } else {
+    else
         video.pause();
-        playBtn.innerText = "▶";
-    }
+
 };
 
+
+/* REAL VIDEO EVENTS CONTROL BUTTON STATE */
+
+video.addEventListener('play', () => {
+
+    playBtn.innerText = "| |";
+
+    showProgressBar();
+
+});
+
+
+video.addEventListener('pause', () => {
+
+    playBtn.innerText = "▶";
+
+});
+
+
+/* VIDEO READY → AUTOPLAY */
+
+video.addEventListener('canplay', () => {
+
+    video.play().catch(()=>{});
+
+});
+
+
+/* VIDEO ERROR (FILE DOES NOT EXIST) */
+
+video.addEventListener('error', () => {
+
+    trackExists = false;
+
+    video.pause();
+
+    hideProgressBar();
+
+    playBtn.innerText = "▶";
+
+    alert("No more tracks");
+
+});
+
+
+/* NEXT BUTTON */
+
+nextBtn.onclick = () => {
+
+    playNextTrack();
+
+};
+
+
+/* PREV BUTTON */
+
+prevBtn.onclick = () => {
+
+    playPrevTrack();
+
+};
+
+
+/* LOOP BUTTON */
+
+loopBtn.onclick = () => {
+
+    loopEnabled = !loopEnabled;
+
+    loopBtn.style.background =
+        loopEnabled ? 'yellow' : 'WhiteSmoke';
+
+};
+
+
+/* TRACK ENDED */
+
+video.addEventListener('ended', () => {
+
+    if (loopEnabled) {
+
+        video.currentTime = 0;
+
+        video.play();
+
+    }
+
+    else {
+
+        playNextTrack();
+
+    }
+
+});
 
 
 /* SPEED UP */
+
 speedupBtn.onclick = () => {
-    video.playbackRate = (parseFloat(video.playbackRate) + 0.05).toFixed(2);
-    speed = parseFloat(video.playbackRate);
-    speedupBtn.innerText = speed !== 1 ? `+ Speed (${speed})` : "+ Speed";
-    speedupBtn.style.border = speed !== 1 ? "1px solid grey" : "1px solid lightgray";
-    speeddownBtn.style.border = "1px solid lightgray";
-    speeddownBtn.innerText = "- Speed";
+
+    speed =
+        Math.min(4,
+        parseFloat(video.playbackRate) + 0.05);
+
+    video.playbackRate = speed;
+
+    speedupBtn.innerText =
+        speed !== 1 ?
+        `+ Speed (${speed.toFixed(2)})` :
+        "+ Speed";
+
+    speedupBtn.style.border =
+        speed !== 1 ?
+        "1px solid grey" :
+        "1px solid lightgray";
+
 };
+
 
 /* SPEED DOWN */
+
 speeddownBtn.onclick = () => {
-    if (video.playbackRate > 0) {
-        video.playbackRate = (parseFloat(video.playbackRate) - 0.05).toFixed(2);
-        speed = parseFloat(video.playbackRate);
-        speeddownBtn.innerText = speed !== 1 ? `- Speed (${speed})` : "- Speed";
-        speeddownBtn.style.border = speed !== 1 ? "1px solid grey" : "1px solid lightgray";
-        speedupBtn.style.border = "1px solid lightgray";
-        speedupBtn.innerText = "+ Speed";
-    }
-};
 
-/* RESET SPEED TO 1 */
-speedNormalBtn.onclick = () => {
-    speed = 1;
+    speed =
+        Math.max(0.1,
+        parseFloat(video.playbackRate) - 0.05);
+
     video.playbackRate = speed;
+
+    speeddownBtn.innerText =
+        speed !== 1 ?
+        `- Speed (${speed.toFixed(2)})` :
+        "- Speed";
+
+    speeddownBtn.style.border =
+        speed !== 1 ?
+        "1px solid grey" :
+        "1px solid lightgray";
+
+};
+
+
+/* RESET SPEED */
+
+speedNormalBtn.onclick = () => {
+
+    speed = 1;
+
+    video.playbackRate = speed;
+
     speedupBtn.innerText = "+ Speed";
+
     speeddownBtn.innerText = "- Speed";
+
     speedupBtn.style.border = "1px solid lightgray";
+
     speeddownBtn.style.border = "1px solid lightgray";
-    speedNormalBtn.blur();
+
 };
 
-/* NEXT BUTTON */
-nextBtn.onclick = playNextTrack;
-
-/* PREV BUTTON */
-prevBtn.onclick = playPrevTrack;
-
-/* LOOP TOGGLE */
-loopBtn.onclick = () => {
-    if (flag === 0) {
-        loopBtn.style.background = 'yellow';
-        flag = 1;
-    } else {
-        loopBtn.style.background = 'WhiteSmoke';
-        flag = 0;
-    }
-};
-
-/* AUTOMATIC TRACK END */
-video.addEventListener('ended', () => {
-    if (flag === 1) {
-        video.currentTime = 0;
-        video.play();
-    } else {
-        hideProgressBar();
-        playNextTrack();
-    }
-});
 
 /* UPDATE TIME DISPLAY */
+
 video.addEventListener('timeupdate', () => {
+
     if (!isNaN(video.duration)) {
-        const currentMinutes = Math.floor(video.currentTime / 60);
-        const currentSeconds = Math.floor(video.currentTime % 60);
-        const durationMinutes = Math.floor(video.duration / 60);
-        const durationSeconds = Math.floor(video.duration % 60);
+
+        const currentMinutes =
+            Math.floor(video.currentTime / 60);
+
+        const currentSeconds =
+            Math.floor(video.currentTime % 60);
+
+        const durationMinutes =
+            Math.floor(video.duration / 60);
+
+        const durationSeconds =
+            Math.floor(video.duration % 60);
 
         currentTimeEl.innerText =
-            (currentMinutes < 10 ? "0" : "") + currentMinutes + ":" +
-            (currentSeconds < 10 ? "0" : "") + currentSeconds;
+            (currentMinutes < 10 ? "0" : "") +
+            currentMinutes +
+            ":" +
+            (currentSeconds < 10 ? "0" : "") +
+            currentSeconds;
 
         durationEl.innerText =
-            (durationMinutes < 10 ? "0" : "") + durationMinutes + ":" +
-            (durationSeconds < 10 ? "0" : "") + durationSeconds;
+            (durationMinutes < 10 ? "0" : "") +
+            durationMinutes +
+            ":" +
+            (durationSeconds < 10 ? "0" : "") +
+            durationSeconds;
+
     }
+
 });
 
-/* SEEK ON CLICK */
-progressContainer.addEventListener('click', (e) => {
-    const width = progressContainer.clientWidth;
+
+/* SEEK */
+
+progressContainer.onclick = (e) => {
+
+    const width =
+        progressContainer.clientWidth;
+
     const clickX = e.offsetX;
-    video.currentTime = (clickX / width) * video.duration;
-});
 
-/* SPACE KEY PLAY/PAUSE */
-document.addEventListener("keydown", (e) => {
+    video.currentTime =
+        (clickX / width) * video.duration;
+
+};
+
+
+/* SPACE KEY PLAY / PAUSE */
+
+document.addEventListener('keydown', (e) => {
+
     if (e.code === "Space") {
+
         e.preventDefault();
+
         playBtn.click();
+
     }
+
 });
 
-/* INITIALIZATION: disable prev button on first track */
+
+/* INITIAL LOAD */
+
+loadTrack(0);
+
 updateButtonsState();
