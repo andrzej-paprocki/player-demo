@@ -151,20 +151,6 @@ body {
   }
 }
 
-/* Mobile */
-@media (max-width: 600px) {
-  /* Сохраняем паддинг, но фиксируем min-height */
-  .wrapper {
-    padding: 15px;
-    min-height: 400px; /* минимальная высота плеера для стабильности */
-  }
-
-  /* Слайдер под мобильный экран */
-  .slider_container {
-    grid-template-columns: 55px 1fr 55px;
-    gap: 8px;
-  }
-}
 
 @media (max-width: 400px) {
   .wrapper {
