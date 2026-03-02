@@ -167,26 +167,30 @@ body {
 }
 
 @media (max-width: 400px) {
-  .container-buttons {
-    grid-template-columns: 1fr;
-    gap: 6px;
-  }
-
-  /* Wrapper чуть меньше для очень маленьких экранов */
   .wrapper {
-    min-height: 1000px;
+    min-height: 350px;
+    padding: 15px;
   }
 
-  /* Видео сохраняет aspect-ratio 16/9 */
   .video-container {
     aspect-ratio: 16 / 9;
     width: 100%;
     margin-bottom: 12px;
   }
 
-  /* Слайдер для очень узких экранов */
   .slider_container {
     grid-template-columns: 50px 1fr 50px;
     gap: 5px;
+  }
+
+  /* Кнопки в один столбец */
+  .container-buttons {
+    grid-template-columns: 1fr; /* одна колонка */
+    gap: 6px;
+  }
+
+  /* Кнопки растягиваются на всю ширину колонки */
+  .container-buttons button {
+    width: 100% !important; /* важное, чтобы перекрыть старые значения width */
   }
 }
