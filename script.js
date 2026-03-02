@@ -164,13 +164,6 @@ video.addEventListener('pause', () => {
 });
 
 
-/* VIDEO READY → AUTOPLAY */
-
-video.addEventListener('canplay', () => {
-
-    video.play().catch(()=>{});
-
-});
 
 
 /* VIDEO ERROR (FILE DOES NOT EXIST) */
