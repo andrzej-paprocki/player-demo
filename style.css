@@ -175,7 +175,7 @@ body {
 
   /* Wrapper чуть меньше для очень маленьких экранов */
   .wrapper {
-    min-height: 700px;
+    min-height: 800px;
   }
 
   /* Видео сохраняет aspect-ratio 16/9 */
