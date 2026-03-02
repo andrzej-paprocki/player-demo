@@ -56,7 +56,7 @@ function loadTrack(index) {
     // If file does not exist, show alert
     video.onerror = () => {
         video.pause();
-        playBtn.innerText = "Play";
+        playBtn.innerText = "&#9658;";
         hideProgressBar();
         alert("No more tracks");
         video.onerror = null; // remove error handler
@@ -96,15 +96,17 @@ updateProgressSmooth();
 /* PLAY / PAUSE */
 playBtn.onclick = () => {
     video.playbackRate = speed;
-    if (playBtn.innerText === "Play") {
+    if (playBtn.innerText === "►") {
         video.play();
-        playBtn.innerText = "Pause";
+        playBtn.innerText = "| |";
         showProgressBar();
     } else {
         video.pause();
-        playBtn.innerText = "Play";
+        playBtn.innerText = "►";
     }
 };
+
+
 
 /* SPEED UP */
 speedupBtn.onclick = () => {
