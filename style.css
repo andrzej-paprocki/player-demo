@@ -173,7 +173,7 @@ body {
   .container-buttons {
     grid-template-columns: 1fr; /* одна колонка */
     gap: 6px;
-    margin-bottm: 20px;
+    margin-bottom: 20px;
   }
 
   /* Кнопки растягиваются на всю ширину колонки */
