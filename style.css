@@ -68,14 +68,6 @@ body {
 
 
 
-
-/*video {
-  width: 100%;
-  height: auto;
-  border-radius: 20px;
-}*/
-
-
 .slider_container {
   display: flex;
   justify-content: center;
@@ -90,7 +82,6 @@ body {
   opacity: 0.5;
 }
 
-/* Кастомный прогресс-бар */
 .progress-container {
   flex: 1;
   height: 5px;
@@ -108,7 +99,6 @@ body {
   transition: width 0.2s linear;
 }
 
-/* Контейнер кнопок */
 .container-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -118,7 +108,6 @@ body {
   margin-top: 15px;
 }
 
-/* Кнопки */
 .container-buttons button {
   padding: 20px;
   opacity: 0.5;
@@ -136,19 +125,16 @@ body {
   appearance: none;
 }
 
-/* hover только для desktop */
 .container-buttons button:hover {
   opacity: 1.0;
 }
 
-/* FIX: убирает изменение размера при нажатии */
 .container-buttons button:active {
   opacity: 1.0;
   transform: none !important;
   outline: none !important;
 }
 
-/* FIX: убирает focus после нажатия */
 .container-buttons button:focus {
   outline: none !important;
   opacity: 0.5;
@@ -161,56 +147,47 @@ body {
   .container-buttons button {
     width: 45%;
     max-width: 220px;
-
-    /* предотвращает mobile rendering shift */
     transform: none !important;
   }
-
 }
 
 /* Mobile */
-@media (max-width: 480px) {
-
+@media (max-width: 600px) {
+  /* Сохраняем паддинг, но фиксируем min-height */
   .wrapper {
     padding: 15px;
+    min-height: 400px; /* минимальная высота плеера для стабильности */
   }
 
+  /* Слайдер под мобильный экран */
+  .slider_container {
+    grid-template-columns: 55px 1fr 55px;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  /* Кнопки в два столбца */
   .container-buttons {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
   }
 
-  .container-buttons button {
-
-    width: 80%;
-    max-width: 280px;
-
-    outline: none !important;
-    transform: none !important;
-    -webkit-tap-highlight-color: transparent;
-
+  /* Wrapper чуть меньше для очень маленьких экранов */
+  .wrapper {
+    min-height: 350px;
   }
 
-  /* полностью отключаем hover на touch */
-  .container-buttons button:hover {
-    opacity: 0.5;
+  /* Видео сохраняет aspect-ratio 16/9 */
+  .video-container {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    margin-bottom: 12px;
   }
 
-  .container-buttons button:active {
-
-    opacity: 1.0;
-    transform: none !important;
-    outline: none !important;
-
+  /* Слайдер для очень узких экранов */
+  .slider_container {
+    grid-template-columns: 50px 1fr 50px;
+    gap: 5px;
   }
-
-  .container-buttons button:focus {
-
-    opacity: 0.5;
-    outline: none !important;
-    transform: none !important;
-
-  }
-
 }
