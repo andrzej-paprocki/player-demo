@@ -173,13 +173,16 @@ body {
     gap: 5px;
   }
 
+  /* Кнопки в один столбец */
   .container-buttons {
+    display: grid;              /* обязательно */
     grid-template-columns: 1fr; /* одна колонка */
-    gap: 6px;
+    gap: 8px;
     margin-bottom: 20px;
   }
 
+  /* Кнопки на всю ширину */
   .container-buttons button {
-    width: 100% !important; /* важное, чтобы перекрыть старые значения width */
+    width: 100%;
   }
 }
