@@ -25,12 +25,19 @@ body {
 }
 
 
+.error:hover {
+    opacity: 0.5;
+}
+
+
 .player {
   min-height: 95vh;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
+
 
 .wrapper {
   width: 100%;
@@ -42,6 +49,8 @@ body {
     rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
+
+
 
 .video-container {
   width: 100%;
@@ -60,6 +69,8 @@ body {
   display: block;
   border-radius: 20px;
 }
+
+
 
 .slider_container {
   display: flex;
@@ -136,6 +147,7 @@ body {
 
 /* Tablet */
 @media (max-width: 768px) {
+
   .container-buttons button {
     width: 45%;
     max-width: 220px;
@@ -143,21 +155,11 @@ body {
   }
 }
 
-/* Mobile */
-/* @media (max-width: 600px) {
-  .wrapper {
-    padding: 15px;
-    min-height: 400px;
-  } 
 
-  .slider_container {
-    grid-template-columns: 55px 1fr 55px;
-    gap: 8px;
-  }
-}*/
+
+
 
 @media (max-width: 500px) {
-
   .wrapper {
     min-height: 350px;
     padding: 15px;
@@ -174,17 +176,15 @@ body {
     gap: 5px;
   }
 
-  /* Кнопки строго в одну колонку */
+  /* Кнопки в один столбец */
   .container-buttons {
-    display: flex !important;          /* перебиваем возможный grid */
-    flex-direction: column !important; /* вертикальное расположение */
-    gap: 8px;
+    grid-template-columns: 1fr; /* одна колонка */
+    gap: 6px;
     margin-bottom: 20px;
-    width: 100%;
   }
 
-  /* Кнопки занимают всю ширину */
+  /* Кнопки растягиваются на всю ширину колонки */
   .container-buttons button {
-    width: 100% !important;
+    width: 100% !important; /* важное, чтобы перекрыть старые значения width */
   }
 }
