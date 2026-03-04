@@ -195,16 +195,20 @@ speedupBtn.onclick = () => {
         parseFloat(video.playbackRate) + 0.05);
 
     video.playbackRate = speed;
+    speeddownBtn.style.border = "0px solid lightgray";
+    speedupBtn.style.border = "1px solid gray";
 
     speedupBtn.innerText =
-        speed !== 1 ?
-        `+ Speed (${speed.toFixed(2)})` :
-        "+ Speed";
+        // speed !== 1 ?
+        `+ Speed (${speed.toFixed(2)})`;
+        // "+ Speed";
 
-    speedupBtn.style.border =
-        speed !== 1 ?
-        "1px solid grey" :
-        "1px solid lightgray";
+    speeddownBtn.innerText = "- Speed";
+
+    // speedupBtn.style.border =
+    //     speed !== 1 ?
+    //     "1px solid grey" :
+    //     "1px solid lightgray";
 };
 
 
@@ -214,15 +218,22 @@ speeddownBtn.onclick = () => {
     speed =
         Math.max(0.1,
         parseFloat(video.playbackRate) - 0.05);
+
+    speedupBtn.innerText = "+ Speed";
+    speeddownBtn.style.border = "1px solid gray";
+    speedupBtn.style.border = "0px solid gray";
+
     video.playbackRate = speed;
+
     speeddownBtn.innerText =
-        speed !== 1 ?
-        `- Speed (${speed.toFixed(2)})` :
-        "- Speed";
-    speeddownBtn.style.border =
-        speed !== 1 ?
-        "1px solid grey" :
-        "1px solid lightgray";
+        // speed !== 1 ?
+        `- Speed (${speed.toFixed(2)})`;
+        // "- Speed";
+
+    // speeddownBtn.style.border =
+    //     speed !== 1 ?
+    //     "1px solid grey" :
+    //     "1px solid lightgray";
 };
 
 
