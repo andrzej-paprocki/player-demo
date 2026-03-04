@@ -148,13 +148,13 @@ body {
   .wrapper {
     padding: 15px;
     min-height: 400px;
-  } */
+  } 
 
   .slider_container {
     grid-template-columns: 55px 1fr 55px;
     gap: 8px;
   }
-}
+}*/
 
 @media (max-width: 500px) {
 
