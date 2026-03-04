@@ -157,6 +157,7 @@ body {
 }
 
 @media (max-width: 500px) {
+
   .wrapper {
     min-height: 350px;
     padding: 15px;
@@ -173,16 +174,17 @@ body {
     gap: 5px;
   }
 
-  /* Кнопки в один столбец */
+  /* Кнопки строго в одну колонку */
   .container-buttons {
-    display: grid;              /* обязательно */
-    grid-template-columns: 1fr; /* одна колонка */
+    display: flex !important;          /* перебиваем возможный grid */
+    flex-direction: column !important; /* вертикальное расположение */
     gap: 8px;
     margin-bottom: 20px;
+    width: 100%;
   }
 
-  /* Кнопки на всю ширину */
+  /* Кнопки занимают всю ширину */
   .container-buttons button {
-    width: 100%;
+    width: 100% !important;
   }
 }
