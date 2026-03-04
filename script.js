@@ -145,7 +145,8 @@ video.addEventListener('error', () => {
     trackExists = false;
     video.pause();
     hideProgressBar();
-    playBtn.innerText = "";
+    // playBtn.innerText = "Play";
+    playBtn.disabled = true;
     alert("No more tracks");
 });
 
