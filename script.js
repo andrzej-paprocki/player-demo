@@ -145,19 +145,12 @@ video.addEventListener('error', () => {
     trackExists = false;
     video.pause();
     hideProgressBar();
-    playBtn.disabled = true;
     playBtn.style.opacity = 0.5;
-    // prevBtn.disabled = true;
     prevBtn.style.opacity = 0.5;
-    nextBtn.disabled = true;
     nextBtn.style.opacity = 0.5;
-    loopBtn.disabled = true;
     loopBtn.style.opacity = 0.5;
-    speedupBtn.disabled = true;
     speedupBtn.style.opacity = 0.5;
-    speeddownBtn.disabled = true;
     speeddownBtn.style.opacity = 0.5;
-    speedNormalBtn.disabled = true;
     speedNormalBtn.style.opacity = 0.5;
 
 
